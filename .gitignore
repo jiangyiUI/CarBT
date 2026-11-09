@@ -1,0 +1,36 @@
+# ===== 原有基础规则 =====
+*.iml
+.gradle
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+
+# ===== 🚨 极度危险：系统签名与密钥（绝对不能传！） =====
+*.jks
+*.keystore
+*.pem
+*.pk8
+*.x509
+signing.properties
+keystore.properties
+
+# ===== 🚨 编译产物：防止误传 APK =====
+*.apk
+*.aab
+*.ap_
+*.dex
+
+# ===== 系统 / IDE 缓存 =====
+Thumbs.db
+*.hprof
+/.idea/

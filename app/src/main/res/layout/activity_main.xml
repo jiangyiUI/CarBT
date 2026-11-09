@@ -1,0 +1,495 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#010409"
+    android:paddingStart="100px">
+
+    <!-- 背景图 -->
+    <ImageView
+        android:id="@+id/ivBg"
+        android:layout_width="0px"
+        android:layout_height="0px"
+        android:scaleType="fitXY"
+        android:src="@drawable/bg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- 顶部标题 -->
+    <ImageView
+        android:id="@+id/ivTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36px"
+        android:src="@drawable/title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- 副标题 -->
+    <TextView
+        android:id="@+id/tvSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2px"
+        android:text="蓝牙回连 · 开机热点 (仅适用于安波福) v2.0"
+        android:textColor="#B3FFFFFF"
+        android:textSize="26px"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivTitle" />
+
+    <!-- 右上角：使用帮助按钮（点击弹出说明弹窗，点击弹窗外部可关闭） -->
+    <TextView
+        android:id="@+id/btnHelp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44px"
+        android:layout_marginEnd="60px"
+        android:background="@drawable/bg_info_row"
+        android:clickable="true"
+        android:focusable="true"
+        android:paddingStart="30px"
+        android:paddingTop="24px"
+        android:paddingEnd="30px"
+        android:paddingBottom="24px"
+        android:text="使用帮助"
+        android:textColor="#FFFFFF"
+        android:textSize="26px"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+
+    <!-- ==================== 左侧卡片 ==================== -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cardLeft"
+        android:layout_width="0px"
+        android:layout_height="444px"
+        android:layout_marginStart="60px"
+        android:layout_marginTop="69px"
+        android:layout_marginBottom="60px"
+        android:background="@drawable/bg_card"
+        android:padding="30px"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/cardRight"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvSubtitle">
+
+        <!-- 标题：运行状态 -->
+        <TextView
+            android:id="@+id/tvCardTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="运行状态"
+            android:textColor="#FFFFFF"
+            android:textSize="30px"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- 当前状态（右对齐） -->
+        <!-- 状态区域整体：靠右对齐 -->
+        <LinearLayout
+            android:id="@+id/statusLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="@id/tvCardTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvCardTitle">
+
+            <!-- 前缀：当前状态： -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="当前状态："
+                android:textColor="#B3FFFFFF"
+                android:textSize="26px" />
+
+            <!-- 状态内容：蓝色字 -->
+            <TextView
+                android:id="@+id/tvStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10px"
+                android:text="监控中 (未绑定手机)"
+                android:textColor="#4A98FF"
+                android:textSize="26px" />
+
+        </LinearLayout>
+
+        <!-- 信息行 1：手机蓝牙 -->
+        <LinearLayout
+            android:id="@+id/rowDevice"
+            android:layout_width="0px"
+            android:layout_height="84px"
+            android:layout_marginTop="30px"
+            android:background="@drawable/bg_info_row"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="30px"
+            android:paddingEnd="30px"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvCardTitle">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="手机蓝牙："
+                android:textColor="#B3FFFFFF"
+                android:textSize="26px" />
+
+            <TextView
+                android:id="@+id/tvBoundDevice"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="#FFFFFF"
+                android:textSize="26px" />
+        </LinearLayout>
+
+        <!-- 信息行 2：互联应用 -->
+        <LinearLayout
+            android:id="@+id/rowCarlife"
+            android:layout_width="0px"
+            android:layout_height="84px"
+            android:layout_marginTop="30px"
+            android:background="@drawable/bg_info_row"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="30px"
+            android:paddingEnd="30px"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rowDevice">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="互联应用："
+                android:textColor="#B3FFFFFF"
+                android:textSize="26px" />
+
+            <TextView
+                android:id="@+id/tvBoundCarlife"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="#FFFFFF"
+                android:textSize="26px" />
+        </LinearLayout>
+
+        <!-- 信息行 3：热点设备 -->
+        <LinearLayout
+            android:id="@+id/rowApClient"
+            android:layout_width="0px"
+            android:layout_height="84px"
+            android:layout_marginTop="30px"
+            android:background="@drawable/bg_info_row"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="30px"
+            android:paddingEnd="30px"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rowCarlife">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="热点设备："
+                android:textColor="#B3FFFFFF"
+                android:textSize="26px" />
+
+            <TextView
+                android:id="@+id/tvBoundApClient"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="#FFFFFF"
+                android:textSize="26px" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- ==================== 右侧卡片 ==================== -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cardRight"
+        android:layout_width="0px"
+        android:layout_height="444px"
+        android:layout_marginStart="30px"
+        android:layout_marginTop="69px"
+        android:layout_marginEnd="60px"
+        android:layout_marginBottom="60px"
+        android:background="@drawable/bg_card"
+        android:padding="30px"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@id/cardLeft"
+        app:layout_constraintTop_toBottomOf="@id/tvSubtitle">
+
+        <!-- 标题：功能设置 -->
+        <TextView
+            android:id="@+id/tvCardTitleRight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="功能设置"
+            android:textColor="#FFFFFF"
+            android:textSize="30px"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- 右上角：日志打印开关行 -->
+        <LinearLayout
+            android:id="@+id/logSwitchRow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="@id/tvCardTitleRight"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvCardTitleRight">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="日志打印"
+                android:textColor="#FFFFFF"
+                android:textSize="26px" />
+
+            <ImageView
+                android:id="@+id/ivSwitchLog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12px"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/switch_thumb_off" />
+        </LinearLayout>
+
+        <!-- ================= 第一行 ================= -->
+        <!-- 按钮 1：宽度固定 370px -->
+        <LinearLayout
+            android:id="@+id/btnBind"
+            android:layout_width="370px"
+            android:layout_height="84px"
+            android:layout_marginTop="30px"
+            android:background="@drawable/bg_info_row"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="30px"
+            android:paddingEnd="30px"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvCardTitleRight">
+
+            <ImageView
+                android:layout_width="36px"
+                android:layout_height="36px"
+                android:src="@drawable/ic_bind_bt" />
+            <TextView
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30px"
+                android:layout_weight="1"
+                android:text="换绑手机蓝牙"
+                android:textColor="#FFFFFF"
+                android:textSize="26px" />
+            <ImageView
+                android:layout_width="16px"
+                android:layout_height="16px"
+                android:alpha="0.5"
+                android:src="@drawable/ic_arrow_right" />
+        </LinearLayout>
+
+        <!-- 开关组 1：蓝牙回连（带背景，靠右填满，间距30px） -->
+        <LinearLayout
+            android:id="@+id/switchGroupBt"
+            android:layout_width="0px"
+            android:layout_height="84px"
+            android:layout_marginStart="30px"
+            android:background="@drawable/bg_info_row"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="30px"
+            android:paddingEnd="30px"
+            app:layout_constraintBottom_toBottomOf="@id/btnBind"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btnBind"
+            app:layout_constraintTop_toTopOf="@id/btnBind">
+
+            <TextView
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="蓝牙回连"
+                android:textColor="#FFFFFF"
+                android:textSize="26px" />
+            <ImageView
+                android:id="@+id/ivSwitchBtMonitor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/switch_thumb_on" />
+        </LinearLayout>
+
+        <!-- ================= 第二行 ================= -->
+        <!-- 按钮 2 -->
+        <LinearLayout
+            android:id="@+id/btnBindCarlife"
+            android:layout_width="370px"
+            android:layout_height="84px"
+            android:layout_marginTop="30px"
+            android:background="@drawable/bg_info_row"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="30px"
+            android:paddingEnd="30px"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnBind">
+
+            <ImageView
+                android:layout_width="36px"
+                android:layout_height="36px"
+                android:src="@drawable/ic_bind_carlife" />
+            <TextView
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30px"
+                android:layout_weight="1"
+                android:text="绑定互联应用"
+                android:textColor="#FFFFFF"
+                android:textSize="26px" />
+            <ImageView
+                android:layout_width="16px"
+                android:layout_height="16px"
+                android:alpha="0.5"
+                android:src="@drawable/ic_arrow_right" />
+        </LinearLayout>
+
+        <!-- 开关组 2：播放/暂停劫持 -->
+        <LinearLayout
+            android:id="@+id/switchGroupHijack"
+            android:layout_width="0px"
+            android:layout_height="84px"
+            android:layout_marginStart="30px"
+            android:background="@drawable/bg_info_row"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="30px"
+            android:paddingEnd="30px"
+            app:layout_constraintBottom_toBottomOf="@id/btnBindCarlife"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btnBindCarlife"
+            app:layout_constraintTop_toTopOf="@id/btnBindCarlife">
+
+            <TextView
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="支持播放/暂停"
+                android:textColor="#FFFFFF"
+                android:textSize="26px" />
+            <ImageView
+                android:id="@+id/ivSwitchHijack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/switch_thumb_on" />
+        </LinearLayout>
+
+        <!-- ================= 第三行 ================= -->
+        <!-- 按钮 3 -->
+        <LinearLayout
+            android:id="@+id/btnBindApClient"
+            android:layout_width="370px"
+            android:layout_height="84px"
+            android:layout_marginTop="30px"
+            android:background="@drawable/bg_info_row"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="30px"
+            android:paddingEnd="30px"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnBindCarlife">
+
+            <ImageView
+                android:layout_width="36px"
+                android:layout_height="36px"
+                android:src="@drawable/ic_bind_hotspot" />
+            <TextView
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30px"
+                android:layout_weight="1"
+                android:text="绑定热点设备"
+                android:textColor="#FFFFFF"
+                android:textSize="26px" />
+            <ImageView
+                android:layout_width="16px"
+                android:layout_height="16px"
+                android:alpha="0.5"
+                android:src="@drawable/ic_arrow_right" />
+        </LinearLayout>
+
+        <!-- 开关组 3：开机热点 -->
+        <LinearLayout
+            android:id="@+id/switchGroupHotspot"
+            android:layout_width="0px"
+            android:layout_height="84px"
+            android:layout_marginStart="30px"
+            android:background="@drawable/bg_info_row"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="30px"
+            android:paddingEnd="30px"
+            app:layout_constraintBottom_toBottomOf="@id/btnBindApClient"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btnBindApClient"
+            app:layout_constraintTop_toTopOf="@id/btnBindApClient">
+
+            <TextView
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="开机热点"
+                android:textColor="#FFFFFF"
+                android:textSize="26px" />
+            <ImageView
+                android:id="@+id/ivSwitchHotspot"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/switch_thumb_on" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
