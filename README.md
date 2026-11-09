@@ -1,9 +1,9 @@
-# CarBT (哈弗Car+助手)
+# CarBT (手机互联助手)
 
 > Android 9 (API 28) 系统级车机辅助工具 · 专为安波福/长城车机打造  
 > 解决 OPPO 手机 Car+ 断连死锁、热点未自启及车机静音键劫持问题
 
-⚠️ 本项目仅供个人学习与技术交流，需配合系统平台签名及特权权限使用。
+⚠️ 本项目仅供个人学习与技术交流，需配合**系统平台签名**及特权权限（`android.uid.system`）使用。
 
 ---
 
@@ -23,41 +23,48 @@
 ## 🚀 核心功能
 
 ### 1. 开机热点自启
-车机启动后自动检测并开启 Wi-Fi 热点，无需手动干预。
+车机启动后，利用底层隐藏 API 静默开启 Wi-Fi 热点。若开机时 WifiService 未就绪，会以 2 秒为周期探测，最高重试 5 次，成功后永久停止（避免死循环）。
 
 ### 2. 蓝牙无感回连
 当手机离开车机蓝牙范围后，若再次靠近并连上热点，自动通过底层 `A2DP_SINK` / `HFP_HF` 代理主动发起蓝牙连接，唤醒 Car+。
 
-### 3. 静音键媒体键劫持
-监听车辆静音键，将其映射为媒体键 `85` 传递给系统。需在 CarLife 中将暂停/播放绑定为 `85`，且 CarLife 需在前台生效。  
-*原理：静音后 App 立即发送播放指令，并传 `85` 至系统，由 CarLife 读取后执行暂停。*
+### 3. 静音键媒体键劫持（需开启开关，默认开启）
+监听车辆的静音键操作。**仅当绑定的 CarLife 处于前台时生效**。  
+*原理*：App 后台以 40ms 为周期巡检静音状态。检测到静音后，立刻向系统注入 `KEYCODE_MEDIA_PLAY_PAUSE (85)`，并随即解除静音。表现为“按下静音键 = 暂停/继续播放”。（需配合 CarLife 内将快捷键设置为 85）。
 
-### 4. 落盘日志
-日志默认关闭，开启后写入：  
-`/sdcard/Android/data/com.example.carbluetooth/files/logs/btmonitor.log`
+### 4. 落盘日志（默认关闭）
+日志开关默认关闭。开启后，会将所有运行状态写入：  
+`/sdcard/Android/data/com.example.carbluetooth/files/logs/btmonitor.log`  
+（单文件限制 512KB，自动滚动备份）。
 
 ---
 
 ## ⚙️ 前置配置说明
 
-蓝牙自动回连需满足以下条件：
+### 🎯 必须绑定项（主界面操作）
+1. **手机蓝牙**：绑定目标手机的 MAC 地址。
+2. **互联应用**：绑定目标 CarLife 的包名。
+3. **热点设备**：绑定手机连接热点后的设备 MAC 地址。
+   > 📌 **注意**：需在手机 Wi-Fi 设置中，将车机热点详情里的隐私选项改为 **“使用设备 MAC 地址”**（禁用随机 MAC），否则每次连接 MAC 都会变。
 
-1. **手机蓝牙绑定**：在 App 主界面完成蓝牙设备绑定。
-2. **互联应用绑定**：绑定 CarLife 包名（如 `com.muyetuge.carlifevehicle.beta`）。
-3. **热点 MAC 绑定**：在 App 主界面绑定手机 Wi-Fi 的 MAC 地址。
-   > 📌 需在手机 Wi-Fi 设置中，将车机热点详情里的隐私选项改为 **“使用设备 MAC 地址”**（禁用随机 MAC）。
-4. **CarLife 自动任务**：在 CarLife 中开启“断联后返回桌面”的自动任务。
+### 🔄 蓝牙自动回连生效条件
+必须同时满足以下三点，App 才会发起主动连接：
+- 手机已连接车机 Wi-Fi 热点；
+- 手机蓝牙未自动连接；
+- CarLife 在后台（非主界面），即未拦截 `CarLife在前台` 的状态。
 
-满足以上条件后，当 **手机已连接车机热点 + CarLife 在后台（非主界面）+ 手机蓝牙未自动连接** 时，App 将自动发起蓝牙回连。
+### 📱 CarLife 端配置
+需在 CarLife 设置中，开启“断联后返回桌面”的自动任务；并将播放/暂停快捷键绑定为 `85`。
 
 ---
 
 ## 🛠️ 技术实现摘要
 
-- **系统特权**：`sharedUserId="android.uid.system"` + `BLUETOOTH_PRIVILEGED` 权限，用于静默操作蓝牙底层。
+- **系统特权**：`sharedUserId="android.uid.system"` + `BLUETOOTH_PRIVILEGED`、`INJECT_EVENTS` 权限。
 - **状态机看门狗**：1 秒周期评估 `热点在线 / CarLife 前台 / 蓝牙连接` 三态，精准触发回连或静默。
 - **代理握手**：反射获取 `A2DP_SINK`、`HFP_HF` 代理，调用隐藏 `connect()` 方法强制建立 ACL 链路。
-- **静默键劫持**：`MediaSession` 监听 + 反射注入 `KEYCODE_MEDIA_PLAY_PAUSE (85)`。
+- **静音键劫持**：反射获取 `AudioManager.isMasterMute()` 监听状态，反射注入 `InputManager.injectInputEvent()` 模拟按键。
+- **UI 动态适配**：使用 `FLAG_LAYOUT_NO_LIMITS` 实现全屏沉浸式，动态读取 `versionName`。
 
 ---
 
