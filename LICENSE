@@ -1,0 +1,17 @@
+Copyright (c) 2026 jiangyiUI
+
+本项目（CarBT / 手机互联助手）采用自定义限制性许可协议。
+
+1. 允许：任何人可以免费下载、阅读、修改本项目源码，用于个人学习、研究和非商业性的车机改造。
+2. 禁止：未经原作者明确书面授权，严禁将本项目（包含其源码、编译后的 APK 或衍生版本）用于任何商业用途，包括但不限于：售卖、租赁、商业分发、或集成到商业销售的产品中。
+3. 声明：本项目属于个人折腾作品，涉及系统级私有 API 调用，使用时需自行承担车机可能变砖、失去保修或功能异常的风险。
+
+------------------------------------------------------------------------
+
+Copyright (c) 2026 jiangyiUI
+
+This project (CarBT) is licensed under a custom restrictive license.
+
+1. ALLOWED: Anyone may download, read, and modify the source code for personal learning, research, and non-commercial head unit modification.
+2. PROHIBITED: Commercial use of this project (including source code, compiled APK, or derivative works) is strictly prohibited without the express written permission of the author. This includes, but is not limited to, selling, renting, commercial distribution, or integration into commercially sold products.
+3. DISCLAIMER: This is a personal hobbyist project that involves system-level hidden API calls. Use at your own risk. The author is not responsible for any bricked devices, voided warranties, or malfunctioning features.
